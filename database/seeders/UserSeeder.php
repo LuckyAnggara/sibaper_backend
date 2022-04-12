@@ -21,6 +21,14 @@ class UserSeeder extends Seeder
             'name' => Str::random(10),
             'nip' => '123456',
             'password' => Hash::make('123456'),
+            'role'=> 'USER'
+        ]);
+
+        DB::table('users')->insert([
+            'name' => Str::random(10),
+            'nip' => '123',
+            'password' => Hash::make('123456'),
+            'role'=> 'ADMIN'
         ]);
     }
 }
