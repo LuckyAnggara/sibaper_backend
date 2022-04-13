@@ -24,7 +24,7 @@ class RequestController extends Controller
             $request->where('no_ticket','like','%'.$no_ticket.'%');
         }
 
-        return response()->json(['data'=> $request->paginate($limit) ]);
+        return response()->json(['data'=> $request->latest()->paginate($limit) ]);
     }
 
     public function store(Request $request)

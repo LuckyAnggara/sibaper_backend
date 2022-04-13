@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Mutation;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -20,5 +21,27 @@ class ProductController extends Controller
         }
 
         return response()->json(['data'=> $product->paginate($limit) ]);
+    }
+
+    public function store(Request $request)
+    {
+        $master = Product::create([
+            'name' => $request->name,
+            'description' => $request->desc,
+        ]);
+
+        if($master)
+        {
+            $mutation = Mutation::create([
+                'product_id' => $master->id,
+                'debit' => 0,
+                'kredit' => 0,
+                'keterangan' => 'Saldo Awal'
+            ]);
+        }
+
+        if($mutation){
+            return response()->json(['data'=> $master]);
+        }
     }
 }
