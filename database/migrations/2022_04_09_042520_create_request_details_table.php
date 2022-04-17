@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('request_id');
             $table->integer('product_id');
             $table->double('quantity');
+            $table->double('acc_quantity')->default(0);
+            $table->string('status')->nullable('PENDING');
             $table->softDeletes();
             $table->timestamps();
         });

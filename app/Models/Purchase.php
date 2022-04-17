@@ -2,19 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Request extends Model
+class Purchase extends Model
 {
     use HasFactory, SoftDeletes;
-
     protected $fillable = [
         'user_id',
         'notes',
-        'status',
-        'no_ticket'
     ];
 
     public function user()
@@ -24,6 +21,6 @@ class Request extends Model
 
     public function detail()
     {
-        return $this->hasMany(RequestDetail::class, 'request_id','id');
+        return $this->hasMany(PurchaseDetail::class, 'purchase_id','id');
     }
 }

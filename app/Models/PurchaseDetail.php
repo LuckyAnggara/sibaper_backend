@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class RequestDetail extends Model
+class PurchaseDetail extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'request_id',
+        'purchase_id',
         'product_id',
         'quantity',
-        'acc_quantity',
-        'status',
     ];
 
     

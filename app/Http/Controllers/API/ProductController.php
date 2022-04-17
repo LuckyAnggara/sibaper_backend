@@ -13,11 +13,17 @@ class ProductController extends Controller
     {
         $name = $request->input('name');
         $limit = $request->input('limit', 6);
+        $sort = $request->input('sort','ASC');
+        $by = $request->input('by');
 
         $product = Product::query();
         if($name)
         {
             $product->where('name','like','%'.$name.'%');
+        }
+        if($by)
+        {
+            $product->orderBy($by,$sort);
         }
 
         return response()->json(['data'=> $product->paginate($limit) ]);

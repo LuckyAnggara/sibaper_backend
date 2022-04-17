@@ -19,6 +19,7 @@ return new class extends Migration
             $table->double('debit')->default(0);
             $table->double('kredit')->default(0);
             $table->text('keterangan')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
