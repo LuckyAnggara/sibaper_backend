@@ -35,6 +35,22 @@ class AuthController extends Controller
         return response()->json(['data'=>$user, 'access_token'=> $token, 'token_type'=> 'Bearer']);
     }
 
+    public function changePassword(Request $request)
+    {
+        $password = 
+    }
+
+
+
+    public function updateProfile(Request $request)
+    {
+        $data = $request->all();
+        $user = Auth::user();
+        $user->update($data);
+
+        return response()->json($user, 200);
+    }
+
     public function login(Request $request)
     {
         if(!Auth::attempt($request->only('nip','password')))
