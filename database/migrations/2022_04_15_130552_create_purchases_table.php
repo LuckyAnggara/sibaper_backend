@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('notes');
+            $table->string('lampiran')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

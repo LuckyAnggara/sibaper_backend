@@ -12,6 +12,7 @@ class Purchase extends Model
     protected $fillable = [
         'user_id',
         'notes',
+        'lampiran'
     ];
 
     public function user()

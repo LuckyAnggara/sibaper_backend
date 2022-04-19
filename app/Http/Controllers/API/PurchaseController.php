@@ -11,6 +11,7 @@ use App\Models\PurchaseDetail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\API\MutationController;
+use Illuminate\Support\Facades\Validator;
 
 class PurchaseController extends Controller
 {
@@ -41,8 +42,7 @@ class PurchaseController extends Controller
         {
             $detail = [];
             if($request->detail){
-                
-                foreach ($request->detail as $key => $value) {
+                foreach($request->detail as $key => $value) {
                     $product = Product::findOrFail($value['id']);
                     $data = PurchaseDetail::create([
                         'purchase_id' => $master->id,
@@ -66,7 +66,8 @@ class PurchaseController extends Controller
                     $detail[] = $data;
                 }
             }
-            $master['detail'] =$detail;
+            $master['detail'] = $detail;
+            
         }
         return response()->json(['data'=> $master]);
     }
@@ -82,6 +83,27 @@ class PurchaseController extends Controller
         }
 
         
+    }
+
+    public function uploadLampiran(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'lampiran'=> 'required|mimes:jpg,bmp,png,jpeg,pdf,rar,zip|max:10240'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json($validator->errors(), 401);
+        }
+
+        if($request->file('lampiran'))
+        {
+            $master = Purchase::find($request->id);
+            $fileName = time().'.'.$request->lampiran->extension();  
+            $file = $request->lampiran->storeAs('uploads', $fileName);
+            $master->lampiran = $file;
+            $master->update();    
+        }
     }
 
 

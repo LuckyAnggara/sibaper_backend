@@ -39,13 +39,18 @@ Route::group(['middleware' =>['auth:sanctum']], function(){
     
 
     Route::post('/purchase/store',[PurchaseController::class,'store']);
+    Route::post('/purchase/upload-lampiran',[PurchaseController::class,'uploadLampiran']);
+
     Route::get('/purchase',[PurchaseController::class,'all']);
     Route::get('/purchase/get',[PurchaseController::class,'get']);
+    
 
     Route::post('/product/store',[ProductController::class,'store']);
 
 
     Route::post('/logout',[AuthController::class,'logout']);
+    Route::post('/change-password',[AuthController::class,'changePassword']);
+    Route::post('/update-profile',[AuthController::class,'updateProfile']);
 
 });
 

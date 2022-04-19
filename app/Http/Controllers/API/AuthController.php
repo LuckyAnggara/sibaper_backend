@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Rules\MatchOldPassword;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -35,12 +36,20 @@ class AuthController extends Controller
         return response()->json(['data'=>$user, 'access_token'=> $token, 'token_type'=> 'Bearer']);
     }
 
+
     public function changePassword(Request $request)
     {
-        $password = 
+
+        $request->validate([
+            'password_lama' => ['required', new MatchOldPassword],
+            'password_baru' => ['required'],
+        ]);
+   
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->password_baru)]);
+
+        return response()->json('Password change successfully', 200);
+   
     }
-
-
 
     public function updateProfile(Request $request)
     {
