@@ -37,10 +37,11 @@ class MutationController extends Controller
         $search_term = $request->input('search_term');
         $limit = $request->input('limit', 10);
         // $cast = '@saldo:=@saldo+debit-kredi AS saldo';
-        $cast = 'cast((@saldo:= @saldo+debit-kredit) AS double) AS saldo';
-        DB::statement(DB::raw('set @saldo=0'));
-        $mutation = DB::table('mutations')->selectRaw('product_id, debit,kredit,keterangan,created_at, '.$cast);
-        $mutation = $mutation->where('product_id', $request->id)->orderBy('created_at', 'desc')->orderBy('id', 'desc');
+        // $cast = 'cast((@saldo:= @saldo+debit-kredit) AS double) AS saldo';
+        // DB::statement(DB::raw('set @saldo=0'));
+        // $mutation = DB::table('mutations')->selectRaw('product_id, debit,kredit,keterangan,created_at, '.$cast);
+        $mutation = DB::table('mutations')->selectRaw('id,product_id, debit,kredit,keterangan,created_at');
+        $mutation = $mutation->where('product_id', $request->id)->orderBy('created_at', 'asc')->orderBy('id', 'asc');
         // $mutation = Mutation::query()->selectRaw($cast)->where('product_id', $request->id);
         if($search_term)
         {
