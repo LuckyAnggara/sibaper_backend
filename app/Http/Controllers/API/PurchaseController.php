@@ -11,6 +11,7 @@ use App\Models\PurchaseDetail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\API\MutationController;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PurchaseController extends Controller
@@ -104,6 +105,18 @@ class PurchaseController extends Controller
             $master->lampiran = $file;
             $master->update();    
         }
+    }
+
+    function getFile(Request $request){
+        $id = $request->input('id');
+
+        $master = Purchase::find($id);
+        return Storage::download($master->lampiran);
+
+        $file= Storage::disk('public')->get($master->lampiran);
+  
+        return response()->download($master->lampiran);
+              
     }
 
 

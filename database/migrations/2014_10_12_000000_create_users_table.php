@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('role');
             $table->string('bagian');
+            $table->string('status')->default('ACTIVE');
             $table->string('nip')->unique();
             $table->string('password');
             $table->rememberToken();

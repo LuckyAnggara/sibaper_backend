@@ -62,12 +62,18 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $user = User::where('nip', $request['nip'])->firstOrFail();
+
+        if($user->status == 'DEACTIVE')
+        {
+            return response()->json(['message'=>'Deactive'], 403);
+        }
+
         if(!Auth::attempt($request->only('nip','password')))
         {
             return response()->json(['message'=>'Unauthorized'],401);
         }
 
-        $user = User::where('nip', $request['nip'])->firstOrFail();
 
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json(['access_token' => $token, 'token_type' => 'Bearer', ]);

@@ -5,6 +5,8 @@ use App\Http\Controllers\API\MutationController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\PurchaseController;
 use App\Http\Controllers\API\RequestController;
+use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\BuktiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +25,8 @@ Route::post('/register',[AuthController::class,'register']);
 Route::post('/login',[AuthController::class,'login']);
 Route::get('/request/get',[RequestController::class,'get']);
 Route::get('/mutation/get',[MutationController::class,'get']);
+Route::get('/purchase/get-file',[PurchaseController::class,'getFile']);
+Route::get('/print/get',[BuktiController::class,'generate']);
 
 
 Route::group(['middleware' =>['auth:sanctum']], function(){
@@ -30,6 +34,11 @@ Route::group(['middleware' =>['auth:sanctum']], function(){
     {
         return auth()->user();
     });
+
+    Route::get('/user',[UserController::class, 'all']);
+    Route::post('/user/reset-password',[UserController::class, 'resetPassword']);
+    Route::post('/user/ubah-status',[UserController::class, 'ubahStatus']);
+
     Route::get('/request',[RequestController::class, 'all']);
     Route::post('/request/store',[RequestController::class,'store']);
     Route::get('/request/all-admin',[RequestController::class,'allAdmin']);
