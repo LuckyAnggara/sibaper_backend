@@ -110,6 +110,7 @@ class RequestController extends Controller
         if($master)
         {
             $master->status = 'ACCEPT';
+            $master->user_admin = Auth::user()->id;
             $master->save();
 
             foreach ($request->detail as $key => $value) {

@@ -94,7 +94,7 @@ class PurchaseController extends Controller
 
         if($validator->fails())
         {
-            return response()->json($validator->errors(), 401);
+            return response()->json($validator->errors(), 206);
         }
 
         if($request->file('lampiran'))
@@ -111,11 +111,11 @@ class PurchaseController extends Controller
         $id = $request->input('id');
 
         $master = Purchase::find($id);
-        return Storage::download($master->lampiran);
+        return Storage::url($master->lampiran);
 
-        $file= Storage::disk('public')->get($master->lampiran);
+        // $file= Storage::disk('public')->get($master->lampiran);
   
-        return response()->download($master->lampiran);
+        // return response()->download($master->lampiran);
               
     }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -24,10 +25,21 @@ class UserController extends Controller
                 ->orWhere('nip','like','%'.$search.'%')
                 ->orWhere('status','like','%'.$search.'%');
             });
-
-            
         }
+        $user->orderBy('id','DESC');
         return response()->json(['data'=> $user->paginate($limit) ]);
+    }
+
+    public function cekNip(Request $request)
+    {
+        $nip = $request->input('nip');
+
+        $user = User::where('nip', $nip)->first();
+        if($user){
+          return  response()->json(['message' => true], 200); 
+        }else{
+            return   response()->json(['message' => false], 200); 
+        }
     }
 
     public function resetPassword(Request $request){
@@ -48,5 +60,27 @@ class UserController extends Controller
         $user->update();
 
         return response()->json('Status user change to '.$status. ' successfully', 200);
+    }
+
+    public function register(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'name'=>'required|string|max:255',
+            'bagian'=>'required|string|max:255',
+            'nip'=>'required|string|max:255|unique:users',
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json($validator->error());
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'nip' => $request->nip,
+            'bagian' => $request->bagian,
+            'role' => 'USER',
+            'password' => Hash::make('123456'),
+        ]);
     }
 }

@@ -27,6 +27,7 @@ Route::get('/request/get',[RequestController::class,'get']);
 Route::get('/mutation/get',[MutationController::class,'get']);
 Route::get('/purchase/get-file',[PurchaseController::class,'getFile']);
 Route::get('/print/get',[BuktiController::class,'generate']);
+Route::get('/print/get2',[BuktiController::class,'convertWordToPDF']);
 
 
 Route::group(['middleware' =>['auth:sanctum']], function(){
@@ -38,6 +39,8 @@ Route::group(['middleware' =>['auth:sanctum']], function(){
     Route::get('/user',[UserController::class, 'all']);
     Route::post('/user/reset-password',[UserController::class, 'resetPassword']);
     Route::post('/user/ubah-status',[UserController::class, 'ubahStatus']);
+    Route::get('/user/cek-nip',[UserController::class, 'cekNip']);
+    Route::post('/user/register',[UserController::class, 'register']);
 
     Route::get('/request',[RequestController::class, 'all']);
     Route::post('/request/store',[RequestController::class,'store']);

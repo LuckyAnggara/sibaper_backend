@@ -22,6 +22,11 @@ class Request extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    public function admin()
+    {
+        return $this->hasOne(User::class, 'id', 'user_admin');
+    }
+
     public function detail()
     {
         return $this->hasMany(RequestDetail::class, 'request_id','id');
