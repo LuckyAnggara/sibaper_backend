@@ -32,15 +32,16 @@ class RequestController extends Controller
     {
         $master = ModelsRequest::create([
             'user_id' => $request->user_id,
-            'notes' => $request->notes,
+            'notes' =>$request->notes,
             'status' => 'PENDING',
             'no_ticket' => '',
         ]);
 
         if($master)
+
+        {
             $master->no_ticket = Carbon::now()->format('Ymd') . '-' .$master->id;
             $master->save();
-        {
             $detail = [];
             if($request->detail){
                 
@@ -105,47 +106,59 @@ class RequestController extends Controller
 
     public function update(Request $request){
         $id = $request->input('id');
+        $status = $request->input('status');
         $master = ModelsRequest::with(['detail'])->find($id);
 
-        if($master)
+        if($status == 'ACCEPT')
         {
-            $master->status = 'ACCEPT';
+            if($master)
+            {
+                $master->status = 'ACCEPT';
+                $master->user_admin = Auth::user()->id;
+                $master->save();
+    
+                foreach ($request->detail as $key => $value) {
+                    $detail = RequestDetail::find($value['id']);
+                    $product = Product::find($value['product_id']);
+                    
+                    if($value['quantity'] < $product->quantity)
+                    {
+                        $detail->acc_quantity = $value['quantity'];
+                        $detail->status = 'ACCEPT';
+                        $detail->save();
+    
+                        $new = Mutation::create([
+                            'product_id'=> $value['product_id'],
+                            'debit'=> 0,
+                            'kredit'=> $value['quantity'],
+                            'keterangan'=> 'Permintaan nomor ticket #'.$master->no_ticket,
+                        ]);
+    
+                        $update = (new MutationController)->update($value['product_id']);
+                    }
+                    else
+                    {
+                        $detail->status = 'REJECT';
+                        $detail->save();
+                    }
+                }
+    
+                $sisa_detail = RequestDetail::where('request_id', $id)->where('status','PENDING')->get();
+                foreach ($sisa_detail as $key => $value) {
+                    $value->status = 'REJECT';
+                    $value->save();
+                }
+    
+            }
+        }else{
+            $master->status = 'REJECT';
             $master->user_admin = Auth::user()->id;
             $master->save();
-
-            foreach ($request->detail as $key => $value) {
-                $detail = RequestDetail::find($value['id']);
-                $product = Product::find($value['product_id']);
-                
-                if($value['quantity'] < $product->quantity)
-                {
-                    $detail->acc_quantity = $value['quantity'];
-                    $detail->status = 'ACCEPT';
-                    $detail->save();
-
-                    $new = Mutation::create([
-                        'product_id'=> $value['product_id'],
-                        'debit'=> 0,
-                        'kredit'=> $value['quantity'],
-                        'keterangan'=> 'Permintaan nomor ticket #'.$master->no_ticket,
-                    ]);
-
-                    $update = (new MutationController)->update($value['product_id']);
-                }
-                else
-                {
-                    $detail->status = 'REJECT';
-                    $detail->save();
-                }
-            }
-
-            $sisa_detail = RequestDetail::where('request_id', $id)->where('status','PENDING')->get();
-            foreach ($sisa_detail as $key => $value) {
-                $value->status = 'REJECT';
-                $value->save();
-            }
-
         }
+
+        return response()->json(['data'=> $master]); 
+
+
 
     }
 

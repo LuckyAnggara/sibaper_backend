@@ -14,6 +14,7 @@ class Request extends Model
         'user_id',
         'notes',
         'status',
+        'user_admin',
         'no_ticket'
     ];
 

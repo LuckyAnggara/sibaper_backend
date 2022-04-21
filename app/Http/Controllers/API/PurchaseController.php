@@ -76,14 +76,11 @@ class PurchaseController extends Controller
     public function get(Request $request)
     {
         $id = $request->input('id');
-        
         $request = Purchase::with(['user','detail.product'])->where('id', $id)->first();
         if($request)
         {
             return response()->json(['data'=> $request]);
         }
-
-        
     }
 
     public function uploadLampiran(Request $request)
@@ -111,7 +108,9 @@ class PurchaseController extends Controller
         $id = $request->input('id');
 
         $master = Purchase::find($id);
-        return Storage::url($master->lampiran);
+        // return Storage::disk('public')->download($master->lampiran);
+        return Storage::download($master->lampiran);
+        // return Storage::url($master->lampiran);
 
         // $file= Storage::disk('public')->get($master->lampiran);
   

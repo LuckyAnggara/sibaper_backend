@@ -23,11 +23,12 @@ class BuktiController extends Controller
 
         foreach ($data->detail as $key => $detail) 
         {
-            $c[] = array('dd'=> $key++,'product_name' =>$detail->product->name, 'jumlah' => $detail->quantity);
+            $c[] = array('dd'=> $key+ 1,'product_name' =>$detail->product->name, 'jumlah' => $detail->quantity);
         }
         $data->detail = $c;
 
         $template_document->setValue('tanggal', $tanggal);
+        $template_document->setValue('no_ticket', $data->no_ticket);
         $template_document->setValue('nama_admin', $data->admin->name);
         $template_document->setValue('nip_admin', $data->admin->nip);
         $template_document->setValue('nama_penerima', $data->user->name);
