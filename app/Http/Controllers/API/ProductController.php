@@ -26,6 +26,9 @@ class ProductController extends Controller
             $product->orderBy($by,$sort);
         }
 
+ 
+
+
         return response()->json(['data'=> $product->paginate($limit) ]);
     }
 

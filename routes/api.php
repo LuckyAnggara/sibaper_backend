@@ -27,7 +27,7 @@ Route::get('/request/get',[RequestController::class,'get']);
 Route::get('/mutation/get',[MutationController::class,'get']);
 Route::get('/purchase/get-file',[PurchaseController::class,'getFile']);
 Route::get('/print/get',[BuktiController::class,'generate']);
-Route::get('/print/get2',[BuktiController::class,'convertWordToPDF']);
+Route::get('/print/get-bukti',[BuktiController::class,'buktiPDF']);
 
 
 Route::group(['middleware' =>['auth:sanctum']], function(){
@@ -55,6 +55,7 @@ Route::group(['middleware' =>['auth:sanctum']], function(){
 
     Route::get('/purchase',[PurchaseController::class,'all']);
     Route::get('/purchase/get',[PurchaseController::class,'get']);
+    Route::delete('/purchase/destroy/{id}',[PurchaseController::class,'destroy']);
     
 
     Route::post('/product/store',[ProductController::class,'store']);

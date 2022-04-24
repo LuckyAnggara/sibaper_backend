@@ -118,5 +118,17 @@ class PurchaseController extends Controller
               
     }
 
+    public function destroy($id)
+    {
+        $master = Purchase::find($id);
+
+        if($master)
+        {
+            $master->delete();
+        }
+
+        return response()->json($master);
+    }
+
 
 }

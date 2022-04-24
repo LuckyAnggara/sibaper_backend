@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use PDF;
 use App\Models\Purchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -10,6 +9,7 @@ use PhpOffice\PhpWord\Settings;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Request as ModelsRequest;
 use PhpOffice\PhpWord\TemplateProcessor;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class BuktiController extends Controller
 {
@@ -40,21 +40,16 @@ class BuktiController extends Controller
 
     }
 
-
-    public function convertWordToPDF()
+    public function buktiPDF(Request $request)
     {
-            /* Set the PDF Engine Renderer Path */
-        $domPdfPath = base_path('vendor/dompdf/dompdf');
-        \PhpOffice\PhpWord\Settings::setPdfRendererPath($domPdfPath);
-        \PhpOffice\PhpWord\Settings::setPdfRendererName(Settings::PDF_RENDERER_DOMPDF);
-         
-        //Load word file
-        $Content = \PhpOffice\PhpWord\IOFactory::load(storage_path('app\public\template\spd.docx')); 
- 
-        //Save it into PDF
-        $PDFWriter = \PhpOffice\PhpWord\IOFactory::createWriter($Content,'PDF');
-        $PDFWriter->save(storage_path('app\public\template\new_spd.pdf')); 
-        return response()->json('File has been successfully converted') ;
+        $id = $request->input('id');
+        
+        $data = ModelsRequest::with(['user','admin','detail.product'])->where('id',$id)->first();
+
+        $pdf = PDF::loadView('bukti', compact('data'));
+        // return view('bukti');
+
+        return $pdf->download('Bukti '.$data->no_ticket.'.pdf');
     }
 
 }
