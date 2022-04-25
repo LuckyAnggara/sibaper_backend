@@ -20,6 +20,14 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Lucky',
             'nip' => '123456',
+            'bagian' => 'Umum',
+            'password' => Hash::make('123456'),
+            'role'=> 'USER'
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Bobby',
+            'nip' => '12',
             'bagian' => 'Keuangan',
             'password' => Hash::make('123456'),
             'role'=> 'USER'

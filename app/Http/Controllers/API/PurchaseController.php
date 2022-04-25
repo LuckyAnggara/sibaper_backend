@@ -36,7 +36,7 @@ class PurchaseController extends Controller
         $master = Purchase::create([
             'user_id' => $request->user_id,
             'notes' => $request->notes,
-            'created_at' => $request->tanggal,
+            'created_at' => date("Y-m-d H:i:s", strtotime($request->tanggal))
         ]);
 
         if($master)
