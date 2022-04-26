@@ -14,5 +14,17 @@ class Product extends Model
         'name',
         'description',
         'quantity',
+        'unit_id',
+        'type_id',
     ];
+
+    public function type()
+    {
+        return $this->hasOne(Type::class, 'id', 'type_id');
+    }
+
+    public function unit()
+    {
+        return $this->hasOne(Unit::class, 'id', 'unit_id');
+    }
 }

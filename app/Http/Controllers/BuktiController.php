@@ -23,7 +23,7 @@ class BuktiController extends Controller
 
         foreach ($data->detail as $key => $detail) 
         {
-            $c[] = array('dd'=> $key+ 1,'product_name' =>$detail->product->name, 'jumlah' => $detail->quantity);
+            $c[] = array('dd'=> $key+ 1,'product_name' =>$detail->product->name, 'jumlah' => $detail->acc_quantity);
         }
         $data->detail = $c;
 

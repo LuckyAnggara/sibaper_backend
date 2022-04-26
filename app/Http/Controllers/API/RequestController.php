@@ -66,7 +66,7 @@ class RequestController extends Controller
     {
         $no_ticket = $request->input('no_ticket');
         
-        $request = ModelsRequest::with(['user','detail.product'])->where('no_ticket', $no_ticket)->first();
+        $request = ModelsRequest::with(['user','detail.product.unit'])->where('no_ticket', $no_ticket)->first();
         if($request)
         {
             return response()->json(['data'=> $request]);
@@ -97,7 +97,7 @@ class RequestController extends Controller
     public function getAdmin(Request $request)
     {
         $no_ticket = $request->input('no_ticket');
-        $request = ModelsRequest::with(['user','detail.product'])->where('no_ticket', $no_ticket)->first();
+        $request = ModelsRequest::with(['user','detail.product.unit'])->where('no_ticket', $no_ticket)->first();
         if($request)
         {
             return response()->json(['data'=> $request]);

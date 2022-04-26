@@ -13,23 +13,19 @@ class ProductController extends Controller
     {
         $name = $request->input('name');
         $limit = $request->input('limit', 6);
-        $sort = $request->input('sort','ASC');
-        $by = $request->input('by');
 
-        $product = Product::query();
+        $product = Product::with(['unit','type']);
+
         if($name)
         {
             $product->where('name','like','%'.$name.'%');
         }
-        if($by)
-        {
-            $product->orderBy($by,$sort);
-        }
+  
 
  
 
 
-        return response()->json(['data'=> $product->paginate($limit) ]);
+        return response()->json(['data'=> $product->orderBy('created_at','desc')->paginate($limit) ]);
     }
 
     public function store(Request $request)
@@ -37,6 +33,8 @@ class ProductController extends Controller
         $master = Product::create([
             'name' => $request->name,
             'description' => $request->desc,
+            'type_id' => $request->type,
+            'unit_id' => $request->unit,
         ]);
 
         if($master)

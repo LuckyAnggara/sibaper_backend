@@ -5,6 +5,8 @@ use App\Http\Controllers\API\MutationController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\PurchaseController;
 use App\Http\Controllers\API\RequestController;
+use App\Http\Controllers\API\TypeController;
+use App\Http\Controllers\API\UnitController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\BuktiController;
 use Illuminate\Http\Request;
@@ -68,5 +70,7 @@ Route::group(['middleware' =>['auth:sanctum']], function(){
 });
 
 Route::get('product',[ProductController::class, 'all']);
+Route::get('product/type',[TypeController::class, 'all']);
+Route::get('product/unit',[UnitController::class, 'all']);
 
 
