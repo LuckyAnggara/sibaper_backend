@@ -28,8 +28,15 @@ class Request extends Model
         return $this->hasOne(User::class, 'id', 'user_admin');
     }
 
+    public function time_log()
+    {
+        return $this->hasMany(TimeLog::class, 'request_id', 'id');
+    }
+
     public function detail()
     {
         return $this->hasMany(RequestDetail::class, 'request_id','id');
     }
+
+
 }

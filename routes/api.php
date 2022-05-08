@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\Api\DivisionController;
 use App\Http\Controllers\API\MutationController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\PurchaseController;
@@ -61,6 +62,7 @@ Route::group(['middleware' =>['auth:sanctum']], function(){
     
 
     Route::post('/product/store',[ProductController::class,'store']);
+    Route::put('/product/update',[ProductController::class,'update']);
 
 
     Route::post('/logout',[AuthController::class,'logout']);
@@ -72,5 +74,6 @@ Route::group(['middleware' =>['auth:sanctum']], function(){
 Route::get('product',[ProductController::class, 'all']);
 Route::get('product/type',[TypeController::class, 'all']);
 Route::get('product/unit',[UnitController::class, 'all']);
+Route::get('user/division',[DivisionController::class, 'all']);
 
 

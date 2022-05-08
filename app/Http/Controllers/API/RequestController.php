@@ -10,6 +10,7 @@ use App\Models\RequestDetail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Request as ModelsRequest;
+use App\Models\TimeLog;
 
 class RequestController extends Controller
 {
@@ -38,7 +39,6 @@ class RequestController extends Controller
         ]);
 
         if($master)
-
         {
             $master->no_ticket = Carbon::now()->format('Ymd') . '-' .$master->id;
             $master->save();
@@ -51,6 +51,7 @@ class RequestController extends Controller
                         'request_id' => $master->id,
                         'product_id' => $value['id'],
                         'quantity' => $value['quantity'],
+                        'status' => 'PENDING',
                     ]);
 
                     $data['name'] = $product->name;
@@ -58,6 +59,12 @@ class RequestController extends Controller
                 }
             }
             $master['detail'] =$detail;
+
+            $time_log = TimeLog::create([
+                'request_id'=> $master->id,
+                'keterangan'=> 'Permintaan berhasil dibuat, menunggu persetujuan',
+                'user_id'=> $request->user_id,
+            ]);
         }
         return response()->json(['data'=> $master]);
     }
@@ -66,7 +73,7 @@ class RequestController extends Controller
     {
         $no_ticket = $request->input('no_ticket');
         
-        $request = ModelsRequest::with(['user','detail.product.unit'])->where('no_ticket', $no_ticket)->first();
+        $request = ModelsRequest::with(['user.division','detail.product.unit','time_log.user','detail.product.unit'])->where('no_ticket', $no_ticket)->first();
         if($request)
         {
             return response()->json(['data'=> $request]);
@@ -97,7 +104,7 @@ class RequestController extends Controller
     public function getAdmin(Request $request)
     {
         $no_ticket = $request->input('no_ticket');
-        $request = ModelsRequest::with(['user','detail.product.unit'])->where('no_ticket', $no_ticket)->first();
+        $request = ModelsRequest::with(['user','detail.product.unit','time_log.user'])->where('no_ticket', $no_ticket)->first();
         if($request)
         {
             return response()->json(['data'=> $request]);
@@ -148,12 +155,24 @@ class RequestController extends Controller
                     $value->status = 'REJECT';
                     $value->save();
                 }
+
+                $time_log = TimeLog::create([
+                    'request_id'=> $master->id,
+                    'keterangan'=> 'Permintaan berhasil disetujui',
+                    'user_id'=> Auth::user()->id,
+                ]);
     
             }
         }else{
             $master->status = 'REJECT';
             $master->user_admin = Auth::user()->id;
             $master->save();
+
+            $time_log = TimeLog::create([
+                'request_id'=> $master->id,
+                'keterangan'=> 'Permintaan ditolak',
+                'user_id'=> Auth::user()->id,
+            ]);
         }
 
         return response()->json(['data'=> $master]); 
@@ -169,8 +188,9 @@ class RequestController extends Controller
         if($master)
         {
             $master->delete();
+            return response()->json($master);
         }
+        return response()->json('data not found', 404);
 
-        return response()->json($master);
     }
 }

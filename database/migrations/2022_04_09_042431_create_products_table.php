@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('type_id')->default(1);
-            $table->integer('unit_id')->nullable();
+            $table->integer('unit_id')->default(1);
             $table->string('description')->nullable();
             $table->double('quantity')->default(0);
             $table->softDeletes();

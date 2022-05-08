@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Division;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class UserController extends Controller
         $limit = $request->input('limit', 5);
 
         $user = User::query();
-        $user->orWhereNot('role','ADMIN');
+        $user->orWhereNot('role','ADMIN')->with(['division']);
 
         if($search)
         {
@@ -29,6 +30,7 @@ class UserController extends Controller
         $user->orderBy('id','DESC');
         return response()->json(['data'=> $user->paginate($limit) ]);
     }
+
 
     public function cekNip(Request $request)
     {
@@ -50,6 +52,7 @@ class UserController extends Controller
 
         return response()->json('Password reset successfully', 200);
     }
+    
     public function ubahStatus(Request $request){
         $id = $request->input('id');
         $status = $request->input('status');
@@ -78,7 +81,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'nip' => $request->nip,
-            'bagian' => $request->bagian,
+            'division_id' => $request->division_id,
             'role' => 'USER',
             'password' => Hash::make('123456'),
         ]);

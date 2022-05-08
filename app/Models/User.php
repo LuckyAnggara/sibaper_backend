@@ -35,5 +35,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function division()
+    {
+        return $this->hasOne(Division::class, 'id', 'division_id');
+    }
+
 
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('user_id');
             $table->integer('user_admin')->nullable();
             $table->string('no_ticket');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->string('status');
             $table->softDeletes();
             $table->timestamps();

@@ -13,7 +13,8 @@ class Mutation extends Model
         'product_id',
         'debit',
         'kredit',
-        'keterangan'
+        'keterangan',
+        'created_at'
     ];
 
     protected $appends = ['saldo'];

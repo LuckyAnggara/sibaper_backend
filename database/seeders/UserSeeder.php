@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Lucky',
             'nip' => '123456',
-            'bagian' => 'Umum',
+            'division_id'=> '2',
             'password' => Hash::make('123456'),
             'role'=> 'USER'
         ]);
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Bobby',
             'nip' => '12',
-            'bagian' => 'Keuangan',
+            'division_id'=> '3',
             'password' => Hash::make('123456'),
             'role'=> 'USER'
         ]);
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Salemba',
             'nip' => '123',
-            'bagian' => 'null',
+            'division_id'=> '1',
             'password' => Hash::make('123456'),
             'role'=> 'ADMIN'
         ]);

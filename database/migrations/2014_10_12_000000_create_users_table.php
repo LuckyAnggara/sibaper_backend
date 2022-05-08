@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('role');
-            $table->string('bagian');
+            $table->integer('division_id')->nullable();
             $table->string('status')->default('ACTIVE');
             $table->string('nip')->unique();
             $table->string('password');

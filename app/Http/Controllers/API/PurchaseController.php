@@ -49,6 +49,7 @@ class PurchaseController extends Controller
                         'purchase_id' => $master->id,
                         'product_id' => $value['id'],
                         'quantity' => $value['quantity'],
+                        'created_at' => date("Y-m-d H:i:s", strtotime($request->tanggal))
                     ]);
 
                     if($data)
@@ -58,6 +59,7 @@ class PurchaseController extends Controller
                             'debit'=> $value['quantity'],
                             'kredit'=> 0,
                             'keterangan'=> 'Pembelian persediaan-'.Carbon::createFromFormat('Y-m-d', $request->tanggal)->format('dmY').'-'.$request->notes,
+                            'created_at' => date("Y-m-d H:i:s", strtotime($request->tanggal))
                         ]);
 
                         $update = (new MutationController)->update($value['id']);
