@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Api\DivisionController;
+use App\Http\Controllers\API\LaporanController;
 use App\Http\Controllers\API\MutationController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\PurchaseController;
@@ -69,7 +70,12 @@ Route::group(['middleware' =>['auth:sanctum']], function(){
     Route::post('/change-password',[AuthController::class,'changePassword']);
     Route::post('/update-profile',[AuthController::class,'updateProfile']);
 
+
+
 });
+
+Route::get('/laporan/harian',[LaporanController::class,'harian']);
+
 
 Route::get('product',[ProductController::class, 'all']);
 Route::get('product/type',[TypeController::class, 'all']);
