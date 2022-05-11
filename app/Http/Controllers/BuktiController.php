@@ -40,6 +40,8 @@ class BuktiController extends Controller
         $template_document->setValue('nip_admin', $data->admin->nip);
         $template_document->setValue('nama_penerima', $data->user->name);
         $template_document->setValue('nip_penerima',$data->user->nip);
+        $template_document->setValue('nama_atasan','Agus Pujiyono');
+        $template_document->setValue('nip_atasan','197808252001121001');
         $template_document->cloneRowAndSetValues('dd',$data->detail);
 
         $template_document->saveAs(storage_path('app\public\template\tanda_terima.docx'));

@@ -45,6 +45,7 @@ Route::group(['middleware' =>['auth:sanctum']], function(){
     Route::post('/user/ubah-status',[UserController::class, 'ubahStatus']);
     Route::get('/user/cek-nip',[UserController::class, 'cekNip']);
     Route::post('/user/register',[UserController::class, 'register']);
+    Route::delete('/user/destroy/{id}',[UserController::class, 'destroy']);
 
     Route::get('/request',[RequestController::class, 'all']);
     Route::post('/request/store',[RequestController::class,'store']);
@@ -61,16 +62,12 @@ Route::group(['middleware' =>['auth:sanctum']], function(){
     Route::get('/purchase/get',[PurchaseController::class,'get']);
     Route::delete('/purchase/destroy/{id}',[PurchaseController::class,'destroy']);
     
-
     Route::post('/product/store',[ProductController::class,'store']);
     Route::put('/product/update',[ProductController::class,'update']);
-
 
     Route::post('/logout',[AuthController::class,'logout']);
     Route::post('/change-password',[AuthController::class,'changePassword']);
     Route::post('/update-profile',[AuthController::class,'updateProfile']);
-
-
 
 });
 

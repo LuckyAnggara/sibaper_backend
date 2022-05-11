@@ -16,6 +16,18 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::factory()->count(20)->create();
+        DB::table('product')->insert([
+            'name' => 'Kertas',
+            'unit_id' => '1',
+            'type_id'=> '1',
+            'quantity' => 0,
+        ]);
+
+        DB::table('product')->insert([
+            'name' => 'Pulpen',
+            'unit_id' => '2',
+            'type_id'=> '1',
+            'quantity' => 0,
+        ]);
     }
 }

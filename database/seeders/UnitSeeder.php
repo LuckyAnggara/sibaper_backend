@@ -16,19 +16,39 @@ class UnitSeeder extends Seeder
     public function run()
     {
         DB::table('units')->insert([
-            'name' => 'rim',
+            'name' => 'Rim',
         ]);
 
         DB::table('units')->insert([
-            'name' => 'dus',
+            'name' => 'Dus',
         ]);
 
         DB::table('units')->insert([
-            'name' => 'pieces',
+            'name' => 'Buah',
         ]);
 
         DB::table('units')->insert([
-            'name' => 'buah',
+            'name' => 'Lusin',
+        ]);
+
+        DB::table('units')->insert([
+            'name' => 'Box',
+        ]);
+
+        DB::table('units')->insert([
+            'name' => 'Meter',
+        ]);
+
+        DB::table('units')->insert([
+            'name' => 'Centimeter',
+        ]);
+
+        DB::table('units')->insert([
+            'name' => 'Kilogram',
+        ]);
+
+        DB::table('units')->insert([
+            'name' => 'Gram',
         ]);
     }
 }

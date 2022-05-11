@@ -18,6 +18,18 @@ class UserController extends Controller
         return response()->json(['data'=> $data ]);
     }
 
+    public function destroy(Request $request)
+    {
+        $user = User::find($request->id);
+        if($user){
+            $user->delete();
+            return response()->json($user, 200);
+
+        }
+        return response()->json('data tidak ada', 200);
+
+    }
+
     public function all(Request $request)
     {
         $search = $request->input('search');
@@ -76,7 +88,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
-            'nip' => 'required|max:255|unique:users',
+            'nip' => 'required',
         ]);
 
         if($validator->fails())
