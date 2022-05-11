@@ -54,7 +54,7 @@ class LaporanController extends Controller
         $pdf = PDF::loadView('laporan',['data'=>$data]);
         // return view('laporan',['data'=>$data]);
 
-        return $pdf->download('laporan.pdf');
+        return $pdf->download('laporan persediaan.pdf');
     }
 
   

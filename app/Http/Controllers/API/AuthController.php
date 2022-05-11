@@ -16,13 +16,13 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'name'=>'required|string|max:255',
-            'nip'=>'required|string|max:255|unique:users',
-            'password'=>'required|string|min:6',
+            'nip'=>'required|max:255|unique:users',
+            'password'=>'required|min:6',
         ]);
 
         if($validator->fails())
         {
-            return response()->json($validator->error());
+            return response()->json($validator->errors());
         }
 
         $user = User::create([

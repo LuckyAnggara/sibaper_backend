@@ -22,7 +22,7 @@ class User extends Authenticatable
         'nip',
         'password',
         'role',
-        'bagian'
+        'division_id'
     ];
 
     /**

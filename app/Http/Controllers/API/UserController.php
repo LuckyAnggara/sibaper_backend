@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+
+    public function getDivision(Request $request)
+    {
+        $data = Division::all();
+        return response()->json(['data'=> $data ]);
+    }
+
     public function all(Request $request)
     {
         $search = $request->input('search');
@@ -68,14 +75,13 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'name'=>'required|string|max:255',
-            'bagian'=>'required|string|max:255',
-            'nip'=>'required|string|max:255|unique:users',
+            'name' => 'required|string|max:255',
+            'nip' => 'required|max:255|unique:users',
         ]);
 
         if($validator->fails())
         {
-            return response()->json($validator->error());
+            return response()->json($validator->errors());
         }
 
         $user = User::create([
@@ -85,5 +91,8 @@ class UserController extends Controller
             'role' => 'USER',
             'password' => Hash::make('123456'),
         ]);
+
+        
+        return response()->json($user, 200);
     }
 }

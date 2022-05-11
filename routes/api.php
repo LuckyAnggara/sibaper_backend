@@ -80,6 +80,6 @@ Route::get('/laporan/harian',[LaporanController::class,'harian']);
 Route::get('product',[ProductController::class, 'all']);
 Route::get('product/type',[TypeController::class, 'all']);
 Route::get('product/unit',[UnitController::class, 'all']);
-Route::get('user/division',[DivisionController::class, 'all']);
+Route::get('user/division',[UserController::class, 'getDivision']);
 
 
