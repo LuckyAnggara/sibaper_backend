@@ -30,6 +30,11 @@ class UserController extends Controller
 
     }
 
+    public function profile()
+    {
+        return User::with(['division'])->find(auth()->user()->id);
+    }
+
     public function all(Request $request)
     {
         $search = $request->input('search');

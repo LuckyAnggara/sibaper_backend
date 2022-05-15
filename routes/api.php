@@ -35,10 +35,11 @@ Route::get('/print/get-bukti',[BuktiController::class,'buktiPDF']);
 
 
 Route::group(['middleware' =>['auth:sanctum']], function(){
-    Route::get('/profile', function(Request $request)
-    {
-        return auth()->user();
-    });
+    Route::get('/profile',[UserController::class, 'profile']);
+    // Route::get('/profile', function(Request $request)
+    // {
+    //     return auth()->user();
+    // });
 
     Route::get('/user',[UserController::class, 'all']);
     Route::post('/user/reset-password',[UserController::class, 'resetPassword']);
@@ -72,6 +73,7 @@ Route::group(['middleware' =>['auth:sanctum']], function(){
 });
 
 Route::get('/laporan/harian',[LaporanController::class,'harian']);
+Route::get('/laporan/mutation',[LaporanController::class,'mutation']);
 
 
 Route::get('product',[ProductController::class, 'all']);

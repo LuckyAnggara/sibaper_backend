@@ -40,7 +40,7 @@ class MutationController extends Controller
         // $cast = 'cast((@saldo:= @saldo+debit-kredit) AS double) AS saldo';
         $cast = 'cast((@saldo:= @saldo) AS double) AS saldo';
         DB::statement(DB::raw('set @saldo=0'));
-        $mutation = DB::table('mutations')->selectRaw('product_id, debit,kredit,keterangan,created_at, '.$cast);
+        $mutation = DB::table('mutations')->selectRaw('id,updated_at, product_id, debit,kredit,keterangan,created_at, '.$cast);
         // $mutation = DB::table('mutations')->selectRaw('id,product_id, debit,kredit,keterangan,created_at');
         $mutation = $mutation->where('product_id', $request->id)->orderBy('created_at', 'asc');
         // $mutation = Mutation::query()->selectRaw($cast)->where('product_id', $request->id);

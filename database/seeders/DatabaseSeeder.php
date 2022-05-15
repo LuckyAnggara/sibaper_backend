@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
             TypeSeeder::class,
             UnitSeeder::class,
             UserSeeder::class,
-
         ]);
     }
 }

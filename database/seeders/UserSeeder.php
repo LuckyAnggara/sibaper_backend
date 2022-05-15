@@ -18,24 +18,8 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'Lucky',
-            'nip' => '123456',
-            'division_id'=> '2',
-            'password' => Hash::make('123456'),
-            'role'=> 'USER'
-        ]);
-
-        DB::table('users')->insert([
-            'name' => 'Bobby',
-            'nip' => '12',
-            'division_id'=> '3',
-            'password' => Hash::make('123456'),
-            'role'=> 'USER'
-        ]);
-
-        DB::table('users')->insert([
-            'name' => 'Salemba',
-            'nip' => '123',
+            'name' => 'Wulan Anggraini',
+            'nip' => '198411202009122004',
             'division_id'=> '1',
             'password' => Hash::make('123456'),
             'role'=> 'ADMIN'
