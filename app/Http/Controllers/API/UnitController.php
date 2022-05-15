@@ -13,4 +13,12 @@ class UnitController extends Controller
         $unit = Unit::all();
         return response()->json(['data'=> $unit ]);
     }
+
+    public function add(Request $request){
+        $data = Unit::create([
+            'name' => $request->name,
+        ]);
+        return response()->json(['data'=> $data ]);
+    }
+
 }

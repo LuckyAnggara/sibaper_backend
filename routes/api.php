@@ -33,6 +33,9 @@ Route::get('/purchase/get-file',[PurchaseController::class,'getFile']);
 Route::get('/print/get',[BuktiController::class,'generate']);
 Route::get('/print/get-bukti',[BuktiController::class,'buktiPDF']);
 
+Route::get('/type/add',[TypeController::class,'add']);
+Route::get('/unit/add',[UnitController::class,'add']);
+
 
 Route::group(['middleware' =>['auth:sanctum']], function(){
     Route::get('/profile',[UserController::class, 'profile']);

@@ -13,4 +13,11 @@ class TypeController extends Controller
         $type = Type::all();
         return response()->json(['data'=> $type ]);
     }
+
+    public function add(Request $request){
+        $data = Type::create([
+            'name' => $request->name,
+        ]);
+        return response()->json(['data'=> $data ]);
+    }
 }
