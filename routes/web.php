@@ -2,6 +2,7 @@
 
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('/migrate', function () {
+    Artisan::call('migrate:refresh --seed --force');
+    return 'ok';
+});
    
 
