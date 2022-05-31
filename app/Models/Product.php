@@ -20,11 +20,11 @@ class Product extends Model
 
     public function type()
     {
-        return $this->hasOne(Type::class, 'id', 'type_id');
+        return $this->hasOne(Type::class, 'id', 'type_id')->withTrashed();
     }
 
     public function unit()
     {
-        return $this->hasOne(Unit::class, 'id', 'unit_id');
+        return $this->hasOne(Unit::class, 'id', 'unit_id')->withTrashed();
     }
 }

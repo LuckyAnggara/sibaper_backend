@@ -73,6 +73,10 @@ Route::group(['middleware' =>['auth:sanctum']], function(){
     Route::post('/change-password',[AuthController::class,'changePassword']);
     Route::post('/update-profile',[AuthController::class,'updateProfile']);
 
+    Route::post('/type/store',[TypeController::class,'store']);
+    Route::put('/type/update',[TypeController::class,'update']);
+    Route::delete('/type/destroy/{id}',[TypeController::class,'destroy']);
+
 });
 
 Route::get('/laporan/harian',[LaporanController::class,'harian']);
